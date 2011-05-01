@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 
@@ -19,6 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.billkoch.example.jaxrs.domain.Account;
 import com.billkoch.example.jaxrs.domain.Customer;
 
 public class CustomerResourceTest {
@@ -104,7 +107,7 @@ public class CustomerResourceTest {
 	}
 
 	@Test
-	public void postWithJsonMessageTheServiceWontUnderstandRespondsWithHttpBadRequestResponse() throws Exception {
+	public void postWithJSONMessageTheServiceWontUnderstandRespondsWithHttpBadRequestResponse() throws Exception {
 		MockHttpRequest request = MockHttpRequest.post("/customer");
 		request.content("{this is JSON that the service won't understand.}".getBytes());
 
@@ -115,5 +118,69 @@ public class CustomerResourceTest {
 		dispatcher.invoke(request, response);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));
+	}
+
+	@Test
+	public void putWithASpecificCustomerURIAndXMLRequestBodyUpdatesACustomer() throws Exception {
+		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
+
+		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());
+		String customerAsXML = WriterUtility.asString(customerToUpdate, MediaType.APPLICATION_XML);
+		request.content(customerAsXML.getBytes());
+		request.accept(MediaType.APPLICATION_XML);
+		request.contentType(MediaType.APPLICATION_XML);
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
+
+		Customer updatedCustomer = ReaderUtility.read(Customer.class, MediaType.APPLICATION_XML, response.getContentAsString());
+
+		assertThat(customerToUpdate, is(updatedCustomer));
+	}
+
+	@Test
+	public void putWithASpecificCustomerURIAndJSONRequestBodyUpdatesACustomer() throws Exception {
+		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
+
+		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());
+		String customerAsXML = WriterUtility.asString(customerToUpdate, MediaType.APPLICATION_JSON);
+		request.content(customerAsXML.getBytes());
+		request.accept(MediaType.APPLICATION_JSON);
+		request.contentType(MediaType.APPLICATION_JSON);
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
+
+		Customer updatedCustomer = ReaderUtility.read(Customer.class, MediaType.APPLICATION_JSON, response.getContentAsString());
+
+		assertThat(customerToUpdate, is(updatedCustomer));
+	}
+
+	@Test
+	public void deletingACustomerWithXMLAcceptHeader() throws Exception {
+		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
+		request.accept(MediaType.APPLICATION_XML);
+
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
+	}
+
+	@Test
+	public void deletingACustomerWithJSONAcceptHeader() throws Exception {
+		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
+		request.accept(MediaType.APPLICATION_JSON);
+
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 	}
 }
