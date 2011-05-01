@@ -4,6 +4,6 @@ import com.billkoch.example.jaxrs.domain.Customer;
 
 public interface CustomerService {
 
-	Customer findById(String string);
+	Customer findById(String id);
 
 }

@@ -17,11 +17,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Customer extends BaseDomainObject {
 
 	private String lastName;
-	
+
 	private String firstName;
-	
+
 	private List<Account> accounts;
-	
+
 	public Customer() {
 		this("", "");
 	}
@@ -29,14 +29,14 @@ public class Customer extends BaseDomainObject {
 	public Customer(String lastName, String firstName) {
 		this(lastName, firstName, new ArrayList<Account>());
 	}
-	
+
 	public Customer(String lastName, String firstName, List<Account> accounts) {
 		super();
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.accounts = accounts;
 	}
-	
+
 	public Customer(String id, String lastName, String firstName, List<Account> accounts) {
 		super(id);
 		this.lastName = lastName;
@@ -45,7 +45,7 @@ public class Customer extends BaseDomainObject {
 	}
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public void setLastName(String lastName) {
@@ -53,7 +53,7 @@ public class Customer extends BaseDomainObject {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -61,7 +61,7 @@ public class Customer extends BaseDomainObject {
 	}
 
 	public List<Account> getAccounts() {
-		return accounts;
+		return this.accounts;
 	}
 
 	public void setAccounts(List<Account> accounts) {
@@ -71,10 +71,10 @@ public class Customer extends BaseDomainObject {
 	@Override
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if(obj == this) {
+		if (obj == this) {
 			result = true;
-			
-		} else if(obj instanceof Customer) {
+
+		} else if (obj instanceof Customer) {
 			Customer that = (Customer) obj;
 			result = EqualsBuilder.reflectionEquals(this, that);
 		}

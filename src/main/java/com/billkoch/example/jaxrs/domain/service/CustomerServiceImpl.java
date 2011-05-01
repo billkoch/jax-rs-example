@@ -2,10 +2,13 @@ package com.billkoch.example.jaxrs.domain.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.billkoch.example.jaxrs.domain.Account;
 import com.billkoch.example.jaxrs.domain.Customer;
 import com.google.common.collect.Lists;
 
+@Component
 public class CustomerServiceImpl implements CustomerService {
 
 	@Override
