@@ -2,6 +2,7 @@ package com.billkoch.example.jaxrs.resources;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
@@ -99,6 +100,6 @@ public class CustomerResourceTest {
 
 		String newCustomerURI = response.getOutputHeaders().get("Location").get(0).toString();
 
-		assertThat(newCustomerURI, is("/customer/" + customer.getId()));
+		assertThat(newCustomerURI, startsWith("/customer/"));
 	}
 }

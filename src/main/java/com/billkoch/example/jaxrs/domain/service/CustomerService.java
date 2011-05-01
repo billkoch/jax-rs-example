@@ -6,4 +6,5 @@ public interface CustomerService {
 
 	Customer findById(String id);
 
+	String createCustomer(Customer customer);
 }

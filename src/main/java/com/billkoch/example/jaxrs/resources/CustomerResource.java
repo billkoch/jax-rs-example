@@ -42,6 +42,7 @@ public class CustomerResource {
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response createNewCustomer(Customer customer) {
-		return Response.created(UriBuilder.fromPath("/customer/{id}").build(customer.getId())).build();
+		String newCustomerId = this.customerService.createCustomer(customer);
+		return Response.created(UriBuilder.fromPath("/customer/{id}").build(newCustomerId)).build();
 	}
 }

@@ -1,6 +1,7 @@
 package com.billkoch.example.jaxrs.domain.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,12 @@ public class CustomerServiceImpl implements CustomerService {
 		// this example, it's not necessary.
 		List<Account> accounts = Lists.newArrayList(new Account("456"));
 		return new Customer(id, "Doe", "Jane", accounts);
+	}
+
+	@Override
+	public String createCustomer(Customer customer) {
+		// Normally we'd call out to the database here, but for the purpose of
+		// this example, it's not necessary.
+		return UUID.randomUUID().toString();
 	}
 }
