@@ -102,4 +102,18 @@ public class CustomerResourceTest {
 
 		assertThat(newCustomerURI, startsWith("/customer/"));
 	}
+
+	@Test
+	public void postWithJsonMessageTheServiceWontUnderstandRespondsWithHttpBadRequestResponse() throws Exception {
+		MockHttpRequest request = MockHttpRequest.post("/customer");
+		request.content("{this is JSON that the service won't understand.}".getBytes());
+
+		request.accept(MediaType.APPLICATION_JSON);
+		request.contentType(MediaType.APPLICATION_JSON);
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));
+	}
 }
