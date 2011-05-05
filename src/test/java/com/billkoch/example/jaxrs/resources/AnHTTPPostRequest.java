@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
@@ -24,14 +25,7 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 		Customer customer = new Customer("Doe", "Jane");
 		String customerAsXML = WriterUtility.asString(customer, MediaType.APPLICATION_XML);
 
-		MockHttpRequest request = MockHttpRequest.post("/customer");
-		request.content(customerAsXML.getBytes());
-
-		request.accept(MediaType.APPLICATION_XML);
-		request.contentType(MediaType.APPLICATION_XML);
-		MockHttpResponse response = new MockHttpResponse();
-
-		dispatcher.invoke(request, response);
+		MockHttpResponse response = this.invokeHTTPPost(customerAsXML, MediaType.APPLICATION_XML);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_CREATED));
 
@@ -41,14 +35,7 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 
 	@Test
 	public void toRootCustomerURIWithXMLAcceptHeaderAndPayloadInXMLFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
-		MockHttpRequest request = MockHttpRequest.post("/customer");
-		request.content("<message>This is XML the service won't understand.</message>".getBytes());
-
-		request.accept(MediaType.APPLICATION_JSON);
-		request.contentType(MediaType.APPLICATION_JSON);
-		MockHttpResponse response = new MockHttpResponse();
-
-		dispatcher.invoke(request, response);
+		MockHttpResponse response = this.invokeHTTPPost("<message>This is XML the service won't understand.</message>", MediaType.APPLICATION_XML);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));
 
@@ -61,20 +48,9 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 		Customer customer = new Customer("Doe", "Jane");
 		String customerAsJSON = WriterUtility.asString(customer, MediaType.APPLICATION_JSON);
 
-		MockHttpRequest request = MockHttpRequest.post("/customer");
-		request.content(customerAsJSON.getBytes());
-
-		request.accept(MediaType.APPLICATION_JSON);
-		request.contentType(MediaType.APPLICATION_JSON);
-		MockHttpResponse response = new MockHttpResponse();
-
-		dispatcher.invoke(request, response);
+		MockHttpResponse response = this.invokeHTTPPost(customerAsJSON, MediaType.APPLICATION_JSON);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_CREATED));
-
-		String newCustomerURI = response.getOutputHeaders().get("Location").get(0).toString();
-
-		assertThat(newCustomerURI, startsWith("/customer/"));
 
 		URI locationHeader = (URI) response.getOutputHeaders().getFirst("Location");
 		assertThat(locationHeader.toString(), startsWith("/customer/"));
@@ -82,18 +58,24 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 
 	@Test
 	public void toRootCustomerURIWithJSONAcceptHeaderAndPayloadInJSONFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
-		MockHttpRequest request = MockHttpRequest.post("/customer");
-		request.content("{this is JSON that the service won't understand.}".getBytes());
-
-		request.accept(MediaType.APPLICATION_JSON);
-		request.contentType(MediaType.APPLICATION_JSON);
-		MockHttpResponse response = new MockHttpResponse();
-
-		dispatcher.invoke(request, response);
+		MockHttpResponse response = this.invokeHTTPPost("{this is JSON that the service won't understand.}", MediaType.APPLICATION_JSON);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));
 
 		URI locationHeader = (URI) response.getOutputHeaders().getFirst("Location");
 		assertThat(locationHeader, is(nullValue()));
+	}
+
+	private MockHttpResponse invokeHTTPPost(String requestBody, String acceptHeaderAndContentType) throws URISyntaxException {
+		MockHttpRequest request = MockHttpRequest.post("/customer");
+		request.content(requestBody.getBytes());
+
+		request.accept(acceptHeaderAndContentType);
+		request.contentType(acceptHeaderAndContentType);
+		MockHttpResponse response = new MockHttpResponse();
+
+		dispatcher.invoke(request, response);
+
+		return response;
 	}
 }
