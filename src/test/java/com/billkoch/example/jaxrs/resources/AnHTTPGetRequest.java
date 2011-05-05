@@ -16,21 +16,21 @@ import com.billkoch.example.jaxrs.domain.Customer;
 public class AnHTTPGetRequest extends BaseResourceTest {
 
 	@Test
-	public void withAcceptHeaderSetToXMLShouldReturnASpecificCustomerInXMLFormat() throws Exception {
+	public void toASpecificCustomerURIWithXMLAcceptHeaderShouldReturnACustomerInXMLFormat() throws Exception {
 		MockHttpRequest request = MockHttpRequest.get("/customer/123");
 		request.accept(MediaType.APPLICATION_XML);
 		MockHttpResponse response = new MockHttpResponse();
 
 		dispatcher.invoke(request, response);
 
-		assertThat(HttpServletResponse.SC_OK, is(response.getStatus()));
+		assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
 
 		Customer customer = ReaderUtility.read(Customer.class, MediaType.APPLICATION_XML, response.getContentAsString());
 		assertThat(customer.getId(), is("123"));
 	}
 
 	@Test
-	public void withAcceptHeaderSetToJSONShouldReturnASpecificCustomerInJSONFormat() throws Exception {
+	public void toASpecificCustomerURIWithJSONAcceptHeaderShouldReturnACustomerInJSONFormat() throws Exception {
 		MockHttpRequest request = MockHttpRequest.get("/customer/123");
 		request.accept(MediaType.APPLICATION_JSON);
 		MockHttpResponse response = new MockHttpResponse();

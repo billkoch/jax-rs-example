@@ -14,6 +14,11 @@ public abstract class BaseResourceTest {
 	@BeforeClass
 	public static void initializeRestEasy() {
 		dispatcher = MockDispatcherFactory.createDispatcher();
+
+		// A draw-back to demonstrating Spring integration with RestEasy is that
+		// my unit tests aren't true _unit_ tests: because I'm leveraging
+		// Spring's autowiring capabilities, the "real" implementation of my
+		// service layer is being injected into my JAX-RS resource classes.
 		SpringBeanProcessor restEasySpringBeanProcessor = new SpringBeanProcessor(dispatcher);
 
 		ClassPathXmlApplicationContext springContext = new ClassPathXmlApplicationContext("testApplicationContext.xml");

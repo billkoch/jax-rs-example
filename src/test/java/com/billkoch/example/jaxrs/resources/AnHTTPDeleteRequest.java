@@ -13,7 +13,7 @@ import org.junit.Test;
 public class AnHTTPDeleteRequest extends BaseResourceTest {
 
 	@Test
-	public void toASpecificCustomerURIWithAcceptHeaderSetToXML() throws Exception {
+	public void toASpecificCustomerURIWithXMLAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
 		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
 		request.accept(MediaType.APPLICATION_XML);
 
@@ -25,7 +25,7 @@ public class AnHTTPDeleteRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toASpecificCustomerURIWithAcceptHeaderSetToJSON() throws Exception {
+	public void toASpecificCustomerURIWithJSONAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
 		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
 		request.accept(MediaType.APPLICATION_JSON);
 

@@ -20,7 +20,7 @@ import com.billkoch.example.jaxrs.domain.Customer;
 public class AnHTTPPutRequest extends BaseResourceTest {
 
 	@Test
-	public void withASpecificCustomerURIAndACustomerInXMLFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
+	public void toASpecificCustomerURIAndACustomerInXMLFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
 		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
 
 		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());
@@ -40,7 +40,7 @@ public class AnHTTPPutRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void withASpecificCustomerURIAndACustomerInJSONFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
+	public void toASpecificCustomerURIAndACustomerInJSONFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
 		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
 
 		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());
