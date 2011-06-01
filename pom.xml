@@ -11,7 +11,7 @@
 		<resteasy.version>2.1.0.GA</resteasy.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,12 +54,17 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!-- 
-			The following dependencies are used for Spring's fancy CustomizableTraceInterceptor:
-			1)  spring-aop
-			2)  aspectjweaver
-			3)	cglib-nodep
-		 -->
+			The following dependencies are used for Spring's fancy CustomizableTraceInterceptor: 
+			1) spring-aop 
+			2) aspectjweaver 
+			3) cglib-nodep 
+		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -77,6 +82,11 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.2</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.154</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -117,6 +127,11 @@
 			<version>2.5</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -126,6 +141,23 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8.1</version>
+				<!-- 
+					Unfortunately, the maven-surefire-plugin won't recognize JUnit tests
+					whose class names don't being or end with "Test".
+					
+					Since I'm taking the "name your tests to describe behavior" approach,
+					They would be ignored if I didn't have the below configuration
+					(http://jira.codehaus.org/browse/SUREFIRE-587?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel)
+				 -->
+				<configuration>
+					<includes>
+						<includes>**/*.class</includes>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>
