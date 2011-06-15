@@ -4,7 +4,7 @@
 	<artifactId>jax-rs</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>jax-rs Maven Webapp</name>
+	<name>JAX-RS Example</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<jdk.version>1.6</jdk.version>
@@ -82,11 +82,6 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.2</version>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.3.154</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>

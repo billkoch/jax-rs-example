@@ -21,7 +21,7 @@ public abstract class BaseResourceTest {
 		// service layer is being injected into my JAX-RS resource classes.
 		SpringBeanProcessor restEasySpringBeanProcessor = new SpringBeanProcessor(dispatcher);
 
-		ClassPathXmlApplicationContext springContext = new ClassPathXmlApplicationContext("testApplicationContext.xml");
+		ClassPathXmlApplicationContext springContext = new ClassPathXmlApplicationContext("jaxrsTestApplicationContext.xml");
 		springContext.addBeanFactoryPostProcessor(restEasySpringBeanProcessor);
 
 		SpringResourceFactory springResourceFactory = new SpringResourceFactory("customerResource", springContext, CustomerResource.class);
