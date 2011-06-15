@@ -18,10 +18,10 @@ import org.junit.Test;
 
 import com.billkoch.example.jaxrs.domain.Customer;
 
-public class AnHTTPPostRequest extends BaseResourceTest {
+public class AnHTTPPostRequestToRootCustomerURI extends BaseResourceTest {
 
 	@Test
-	public void toRootCustomerURIWithXMLAcceptHeaderAndPayloadInXMLFormatCreatesANewCustomer() throws Exception {
+	public void withXMLAcceptHeaderAndPayloadInXMLFormatCreatesANewCustomer() throws Exception {
 		Customer customer = new Customer("Doe", "Jane");
 		String customerAsXML = WriterUtility.asString(customer, MediaType.APPLICATION_XML);
 
@@ -34,7 +34,7 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toRootCustomerURIWithXMLAcceptHeaderAndPayloadInXMLFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
+	public void withXMLAcceptHeaderAndPayloadInXMLFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
 		MockHttpResponse response = this.invokeHTTPPost("<message>This is XML the service won't understand.</message>", MediaType.APPLICATION_XML);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));
@@ -44,7 +44,7 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toRootCustomerURIWithJSONAcceptHeaderAndPayloadInJSONFormatCreatesANewCustomer() throws Exception {
+	public void withJSONAcceptHeaderAndPayloadInJSONFormatCreatesANewCustomer() throws Exception {
 		Customer customer = new Customer("Doe", "Jane");
 		String customerAsJSON = WriterUtility.asString(customer, MediaType.APPLICATION_JSON);
 
@@ -57,7 +57,7 @@ public class AnHTTPPostRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toRootCustomerURIWithJSONAcceptHeaderAndPayloadInJSONFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
+	public void withJSONAcceptHeaderAndPayloadInJSONFormatThatCannotBeParsedShouldReturnAnHTTPFourHundredResponse() throws Exception {
 		MockHttpResponse response = this.invokeHTTPPost("{this is JSON that the service won't understand.}", MediaType.APPLICATION_JSON);
 
 		assertThat(response.getStatus(), is(HttpServletResponse.SC_BAD_REQUEST));

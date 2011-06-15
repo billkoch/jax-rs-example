@@ -17,10 +17,10 @@ import org.junit.Test;
 import com.billkoch.example.jaxrs.domain.Account;
 import com.billkoch.example.jaxrs.domain.Customer;
 
-public class AnHTTPPutRequest extends BaseResourceTest {
+public class AnHTTPPutRequestToASpecificCustomerURI extends BaseResourceTest {
 
 	@Test
-	public void toASpecificCustomerURIAndACustomerInXMLFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
+	public void withACustomerInXMLFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
 		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
 
 		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());
@@ -40,7 +40,7 @@ public class AnHTTPPutRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toASpecificCustomerURIAndACustomerInJSONFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
+	public void withACustomerInJSONFormatAsTheRequestBodyUpdatesACustomer() throws Exception {
 		MockHttpRequest request = MockHttpRequest.put("/customer/123456789");
 
 		Customer customerToUpdate = new Customer("123456789", "Doe", "Jane", new ArrayList<Account>());

@@ -10,10 +10,10 @@ import org.jboss.resteasy.mock.MockHttpRequest;
 import org.jboss.resteasy.mock.MockHttpResponse;
 import org.junit.Test;
 
-public class AnHTTPDeleteRequest extends BaseResourceTest {
+public class AnHTTPDeleteRequestToASpecificCustomerURI extends BaseResourceTest {
 
 	@Test
-	public void toASpecificCustomerURIWithXMLAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
+	public void withXMLAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
 		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
 		request.accept(MediaType.APPLICATION_XML);
 
@@ -25,7 +25,7 @@ public class AnHTTPDeleteRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toASpecificCustomerURIWithJSONAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
+	public void withJSONAcceptHeaderShouldReturnAnHTTPTwoHundredResponseCode() throws Exception {
 		MockHttpRequest request = MockHttpRequest.delete("/customer/123456789");
 		request.accept(MediaType.APPLICATION_JSON);
 

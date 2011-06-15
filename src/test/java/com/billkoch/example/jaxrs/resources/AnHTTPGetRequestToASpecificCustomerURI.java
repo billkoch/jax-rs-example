@@ -13,10 +13,10 @@ import org.junit.Test;
 
 import com.billkoch.example.jaxrs.domain.Customer;
 
-public class AnHTTPGetRequest extends BaseResourceTest {
+public class AnHTTPGetRequestToASpecificCustomerURI extends BaseResourceTest {
 
 	@Test
-	public void toASpecificCustomerURIWithXMLAcceptHeaderShouldReturnACustomerInXMLFormat() throws Exception {
+	public void withXMLAcceptHeaderShouldReturnACustomerInXMLFormat() throws Exception {
 		MockHttpRequest request = MockHttpRequest.get("/customer/123");
 		request.accept(MediaType.APPLICATION_XML);
 		MockHttpResponse response = new MockHttpResponse();
@@ -30,7 +30,7 @@ public class AnHTTPGetRequest extends BaseResourceTest {
 	}
 
 	@Test
-	public void toASpecificCustomerURIWithJSONAcceptHeaderShouldReturnACustomerInJSONFormat() throws Exception {
+	public void withJSONAcceptHeaderShouldReturnACustomerInJSONFormat() throws Exception {
 		MockHttpRequest request = MockHttpRequest.get("/customer/123");
 		request.accept(MediaType.APPLICATION_JSON);
 		MockHttpResponse response = new MockHttpResponse();
